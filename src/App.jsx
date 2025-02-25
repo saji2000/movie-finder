@@ -1,14 +1,17 @@
 import React from "react";
 import MovieCard from "./components/MovieCard";
 import Home from "./pages/Home";
+import { Routes, Route } from "react-router-dom";
+import Favorites from "./pages/Favorites";
 
 const App = () => {
   return (
-    <div>
-      {/* <p>Hello</p> */}
-      <Home />
-      {/* <MovieCard movie={{ title: "Sajad's Film", release_date: "2024" }} /> */}
-    </div>
+    <main className="main-content">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/favorites" element={<Favorites />} />
+      </Routes>
+    </main>
   );
 };
 
