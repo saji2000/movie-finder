@@ -1,18 +1,35 @@
 import "../css/Home.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { searchMovies, getPopularMovies } from "../services/api";
 import MovieCard from "../components/MovieCard";
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPopularMovies = async () => {
+      try {
+        const popularMovies = await getPopularMovies();
+        setMovies(popularMovies);
+      } catch (err) {
+        setError("Failed to load movies");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPopularMovies();
+  }, []);
+
   const searchMovie = (e) => {
     alert(searchQuery);
     e.preventDefault();
   };
-  const movies = [
-    { id: 1, title: "John Wick", release_date: "2017" },
-    { id: 2, title: "Terminator", release_date: "1999" },
-    { id: 3, title: "Parasite", release_date: "2019" },
-  ];
+
   return (
     <div className="home">
       <form onSubmit={searchMovie} className="search-form">
